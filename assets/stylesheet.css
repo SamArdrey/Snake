@@ -1,0 +1,78 @@
+html {
+  max-width: 100%;
+  font-family: lobster;
+}
+
+body {
+  background: black;
+  height: 100%;
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+header {
+  color: pink;
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  margin-bottom: 15px;
+  margin-top: 2%;
+}
+
+.title {
+  margin: auto;
+}
+
+#mute, #unmute {
+  cursor: pointer;
+}
+
+.body-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%
+}
+
+.directions {
+  color: white;
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-top: 4%;
+  padding-top: 2%; */
+  text-align: center;
+  width: 20%;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+}
+
+.below-canvas {
+  color: white;
+  font-size: 40px;
+  margin-left: auto;
+  margin-top: 4%;
+  padding-top: 2%;
+  text-align: center;
+  width: 20%;
+}
+
+.links-container{
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
+}
+
+.links{
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
