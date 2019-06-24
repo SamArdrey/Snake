@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/board.js":
+/*!**********************!*\
+  !*** ./src/board.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\n\nfunction Board() {\n  this.board = this.generateBoard();\n}\n\nBoard.prototype.generateBoard = function generateBoard() {\n  let xCoords = new Array(Settings.DIM_X / Settings.SNAKE_SIZE).fill(null);\n  return new Array(Settings.DIM_Y / Settings.SNAKE_SIZE).fill(xCoords);\n};\n\nBoard.prototype.update = function update(add, remove = false) {\n  this.board[add[0]][add[1]] = \"snake\";\n  if (!!remove) this.board[remove[0]][remove[1]] = null;\n};\n\n// Board.prototype.addFood = function addFood(location, objectType) {\n\n// };\n\nBoard.prototype.clearLocation = function clearLocation(location) {\n  this.board[location[0]][location[1]] = null;\n};\n\nBoard.prototype.checkForOverlap = function checkForOverlap(location) {\n  return (this.board[location[0]][location[1]] !== null);\n};\n\nBoard.prototype.checkForCollisions = function checkForCollisions(location) {\n  if (this.wallCollision(location)) return true;\n  if (this.snakeCollision(location)) return true;\n  return false;\n};\n\nBoard.prototype.wallCollision = function wallCollision(location) {\n  if (location[0] < 0) return true;\n  if (location[1] < 0) return true;\n  if (location[0] > Settings.DIM_Y) return true;\n  if (location[1] > Settings.DIM_X) return true;\n  return false;\n};\n\nBoard.prototype.snakeCollision = function snakeCollision(location) {\n  if (this.board[location[0]][location[1]]) return true;\n  return false;\n}\n\n//Utils\n//this converts a board location into canvas coordinates\nBoard.prototype.boardToCoords =  function boardToCoords(location) {\n  return [location[0] * SNAKE_SIZE, location[1] * SNAKE_SIZE];\n};\n\n//converts canvas coordinates to board location\nBoard.prototype.coordsToBoard =  function coordsToBoard(coords) {\n  return [coords[0] / SNAKE_SIZE, coords[1] / SNAKE_SIZE];\n};\n\nmodule.exports = Board;\n\n//# sourceURL=webpack:///./src/board.js?");
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -93,7 +104,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\nconst SnakeFood = __webpack_require__(/*! ./snake_food */ \"./src/snake_food.js\");\n\nfunction Game() {\n  // this.snake = this.addSnake();\n}\n\nGame.BG_COLOR = \"#000000\";\nGame.DIM_X = 600;\nGame.DIM_Y = 600;\nGame.FPS = 32;\n\nGame.prototype.addSnake = function addSnake() {\n  let snake = new Snake();\n  return snake;\n};\n\nGame.prototype.step = function step() {\n  // Save for later\n  // this.checkCollision()\n  // this.moveObjects()\n};\n\nGame.prototype.draw = function draw(ctx) {\n  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);\n  ctx.fillStyle = Game.BG_COLOR;\n  ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);\n  \n  this.drawOutline(ctx);\n\n  this.allObjects().forEach(function(object) {\n    object.draw(ctx);\n  });\n};\n\nGame.prototype.drawOutline = function drawOutline(ctx) {\n  ctx.beginPath();\n  ctx.moveTo(0, 0);\n  ctx.lineTo(0, Game.DIM_Y);\n  ctx.lineWidth = 5;\n  ctx.strokeStyle = \"pink\";\n  ctx.stroke();\n\n  ctx.beginPath();\n  ctx.moveTo(0, 0);\n  ctx.lineTo(Game.DIM_X, 0);\n  ctx.lineWidth = 5;\n  ctx.strokeStyle = \"pink\";\n  ctx.stroke();\n\n  ctx.beginPath();\n  ctx.moveTo(Game.DIM_X, 0);\n  ctx.lineTo(Game.DIM_X, Game.DIM_Y);\n  ctx.lineWidth = 5;\n  ctx.strokeStyle = \"pink\";\n  ctx.stroke();\n\n  ctx.beginPath();\n  ctx.moveTo(0, Game.DIM_Y);\n  ctx.lineTo(Game.DIM_X, Game.DIM_Y);\n  ctx.lineWidth = 5;\n  ctx.strokeStyle = \"pink\";\n  ctx.stroke();\n};\n\n\nGame.prototype.allObjects = function allObjects() {\n  // return [].concat([this.snake]);\n  return;\n};\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
+eval("const Board = __webpack_require__(/*! ./board */ \"./src/board.js\");\nconst Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\nconst Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\nconst SnakeFood = __webpack_require__(/*! ./snake_food */ \"./src/snake_food.js\");\n\nfunction Game() {\n  this.snake = new Snake();\n  this.board = new Board();\n  // this.food = new SnakeFood();\n}\n\nGame.prototype.generateBoard = function generateBoard() {\n  let xCoords = new Array(Settings.DIM_X).fill(null);\n  return new Array(Settings.DIM_Y).fill(xCoords);\n};\n\nGame.prototype.step = function step() {\n  // Save for later\n  // this.board.checkCollisions()\n  // Save for later\n  // this.moveObjects()\n};\n\nGame.prototype.draw = function draw(ctx) {\n  ctx.clearRect(0, 0, Settings.DIM_X, Settings.DIM_Y);\n  ctx.fillStyle = Settings.BG_COLOR;\n  ctx.fillRect(0, 0, Settings.DIM_X, Settings.DIM_Y);\n  this.drawOutline(ctx);\n\n  this.allObjects().forEach(function(object) {\n    object.draw(ctx);\n  });\n};\n\nGame.prototype.drawOutline = function drawOutline(ctx) {\n  ctx.lineWidth = 5;\n  ctx.strokeStyle = \"pink\";\n  this.drawLine(ctx, 0, 0, 0, Settings.DIM_Y)\n  this.drawLine(ctx, 0, 0, Settings.DIM_Y, 0)\n  this.drawLine(ctx, Settings.DIM_X, 0, Settings.DIM_X, Settings.DIM_Y)\n  this.drawLine(ctx, 0, Settings.DIM_Y, Settings.DIM_X, Settings.DIM_Y)\n};\n\nGame.prototype.drawLine = function drawLine(ctx, moveX, moveY, lineX, lineY) {\n  ctx.beginPath();\n  ctx.moveTo(moveX, moveY);\n  ctx.lineTo(lineX, lineY);\n  ctx.stroke();\n};\n\nGame.prototype.allObjects = function allObjects() {\n  return [].concat([this.snake]);\n};\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
 
 /***/ }),
 
@@ -102,9 +113,9 @@ eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\ncon
   !*** ./src/game_view.js ***!
   \**************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("function GameView(game, ctx) {\n  this.ctx = ctx;\n  this.game = game;\n  this.snake = this.game.addSnake();\n}\n\nGameView.MOVES = {\n  w: [0, -1],\n  up: [0, -1],\n\n  a: [-1, 0],\n  left: [-1, 0],\n\n  s: [0, 1],\n  down: [0, 1],\n\n  d: [1, 0],\n  right: [1, 0],\n};\n\nGameView.prototype.bindKeyHandlers = function bindKeyHandlers() {\n  const snake = this.snake;\n\n  Object.keys(GameView.MOVES).forEach(function(k)  {\n    const move = GameView.MOVES[k];\n    //change the name of power below?\n    key(k, function () { snake.changeDirection(move); });\n  });\n};\n\nGameView.prototype.start = function start() {\n  this.bindKeyHandlers();\n  this.lastTime = 0;\n  // start the animation\n  requestAnimationFrame(this.animate.bind(this));\n};\n\nGameView.prototype.animate = function animate(time) {\n  const timeDelta = time - this.lastTime;\n\n  this.game.step(timeDelta);\n  this.game.draw(this.ctx);\n  this.lastTime = time;\n\n  // every call to animate requests causes another call to animate\n  requestAnimationFrame(this.animate.bind(this));\n};\n\nmodule.exports = GameView;\n\n//# sourceURL=webpack:///./src/game_view.js?");
+eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\n\nfunction GameView(game, ctx) {\n  this.ctx = ctx;\n  this.game = game;\n  this.snake = this.game.snake;\n}\n\nGameView.DIRECTION = {\n  w: [1,0],\n  up: [1,0],\n\n  a: [0,-1],\n  left: [0,-1],\n\n  s: [-1,0],\n  down: [-1,0],\n\n  d: [0,1],\n  right: [0,1],\n};\n\nGameView.prototype.bindKeyHandlers = function bindKeyHandlers() {\n  const snake = this.snake;\n\n  Object.keys(GameView.DIRECTION).forEach(function(k)  {\n    const direction = GameView.DIRECTION[k];\n    key(k, function () { snake.changeDirection(direction); });\n  });\n};\n\nGameView.prototype.start = function start() {\n  this.bindKeyHandlers();\n  this.lastTime = 0;\n  // start the animation\n  requestAnimationFrame(this.animate.bind(this));\n};\n\nGameView.prototype.animate = function animate(time) {\n  const timeDelta = time - this.lastTime;\n\n  this.game.step(timeDelta);\n  this.game.draw(this.ctx);\n  this.lastTime = time;\n\n  // every call to animate requests causes another call to animate\n  requestAnimationFrame(this.animate.bind(this));\n};\n\nmodule.exports = GameView;\n\n//# sourceURL=webpack:///./src/game_view.js?");
 
 /***/ }),
 
@@ -115,7 +126,19 @@ eval("function GameView(game, ctx) {\n  this.ctx = ctx;\n  this.game = game;\n  
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\nconst GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\");\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n  const canvasEl = document.getElementsByTagName(\"canvas\")[0];\n  canvasEl.width = Game.DIM_X;\n  canvasEl.height = Game.DIM_Y;\n\n  const ctx = canvasEl.getContext(\"2d\");\n  const game = new Game();\n  new GameView(game, ctx).start();\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\nconst Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\nconst GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\");\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n  const canvasEl = document.getElementsByTagName(\"canvas\")[0];\n  canvasEl.width = Settings.DIM_X;\n  canvasEl.height = Settings.DIM_Y;\n\n  const ctx = canvasEl.getContext(\"2d\");\n  const game = new Game();\n  new GameView(game, ctx).start();\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/settings.js":
+/*!*************************!*\
+  !*** ./src/settings.js ***!
+  \*************************/
+/*! exports provided: BG_COLOR, BORDER_COLOR, DIM_X, DIM_Y, FPS, SNAKE_SIZE, SNAKE_COLOR, SNAKE_FOOD_COLOR */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"BG_COLOR\", function() { return BG_COLOR; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"BORDER_COLOR\", function() { return BORDER_COLOR; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DIM_X\", function() { return DIM_X; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DIM_Y\", function() { return DIM_Y; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"FPS\", function() { return FPS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SNAKE_SIZE\", function() { return SNAKE_SIZE; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SNAKE_COLOR\", function() { return SNAKE_COLOR; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SNAKE_FOOD_COLOR\", function() { return SNAKE_FOOD_COLOR; });\n\n//board related settings\nconst BG_COLOR = \"#000000\";\nconst BORDER_COLOR = \"pink\";\nconst DIM_X = 600;\nconst DIM_Y = 600;\nconst FPS = 32;\n\n//snake-related settings\n//snake food is same size as snake\nconst SNAKE_SIZE = 15;\nconst SNAKE_COLOR = 'pink';\n\n//snake food-related settings\nconst SNAKE_FOOD_COLOR = 'white';\n\n\n\n\n//# sourceURL=webpack:///./src/settings.js?");
 
 /***/ }),
 
@@ -124,9 +147,9 @@ eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\nconst 
   !*** ./src/snake.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("function Snake() {\n\n}\n\n\nSnake.prototype.changeDirection = function changeDirection() {\n\n};\n\nmodule.exports = Snake;\n\n//# sourceURL=webpack:///./src/snake.js?");
+eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\n\nfunction Snake() {\n  this.direction = [-1, 0];\n  this.length = 1;\n  this.head = this.middle();\n  this.body = [this.head];\n}\n\nSnake.prototype.changeDirection = function changeDirection(direction) {\n  //Prevents the snake from turning around\n  if (this.direction[0] === -1 * direction[0] &&\n      this.direction[1] === -1 * direction[1]) return;\n  this.direction = direction;\n};\n\n\nSnake.prototype.move = function move(food) {\n  this.head[0] += this.direction[0];\n  this.head[1] += this.direction[1];\n  this.body.unshift(this.head);\n\n  return this.isEating(food);\n};\n\nSnake.prototype.isEating = function isEating(food) {\n  //If the snake eats, the tail doesn't shrink\n  //also exports the tail location for updating the board\n  if (this.head[0] === food[0] &&\n    this.head[1] === food[1]) return this.body[this.body.length-1];\n  this.moveTail();\n};\n\nSnake.prototype.moveTail = function moveTail() {\n  this.body.pop();\n};\n\nSnake.prototype.draw = function draw(ctx) {\n  ctx.fillStyle = Settings.SNAKE_COLOR;\n  for (let part of this.body) {\n    ctx.fillRect(part[1], part[0], Settings.SNAKE_SIZE, Settings.SNAKE_SIZE);\n  }\n};\n\nSnake.prototype.middle = function middle() {\n  const y = Settings.DIM_Y / 2;\n  const x = Settings.DIM_X / 2;\n  return [y, x];\n};\n\nmodule.exports = Snake;\n\n//# sourceURL=webpack:///./src/snake.js?");
 
 /***/ }),
 

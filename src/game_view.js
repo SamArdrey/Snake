@@ -1,30 +1,31 @@
+const Settings = require('./settings');
+
 function GameView(game, ctx) {
   this.ctx = ctx;
   this.game = game;
-  this.snake = this.game.addSnake();
+  this.snake = this.game.snake;
 }
 
-GameView.MOVES = {
-  w: [0, -1],
-  up: [0, -1],
+GameView.DIRECTION = {
+  w: [1,0],
+  up: [1,0],
 
-  a: [-1, 0],
-  left: [-1, 0],
+  a: [0,-1],
+  left: [0,-1],
 
-  s: [0, 1],
-  down: [0, 1],
+  s: [-1,0],
+  down: [-1,0],
 
-  d: [1, 0],
-  right: [1, 0],
+  d: [0,1],
+  right: [0,1],
 };
 
 GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
   const snake = this.snake;
 
-  Object.keys(GameView.MOVES).forEach(function(k)  {
-    const move = GameView.MOVES[k];
-    //change the name of power below?
-    key(k, function () { snake.changeDirection(move); });
+  Object.keys(GameView.DIRECTION).forEach(function(k)  {
+    const direction = GameView.DIRECTION[k];
+    key(k, function () { snake.changeDirection(direction); });
   });
 };
 
