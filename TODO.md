@@ -1,6 +1,6 @@
 To Do List:
 *Overarching
-  Figure out what to do to make x and y coorsinates either consistant or easily understood
+  Figure out what to do to make x and y coordinates either consistant or easily understood
 
 *Collision
   <!-- -Collision with food...??? -->
@@ -8,7 +8,7 @@ To Do List:
 *Snake_Food
   <!-- -Only one ever in play -->
   <!-- -Random location generation -->
-  -Draw
+  - Draw
 
 *Misc
   Show snake length at the top

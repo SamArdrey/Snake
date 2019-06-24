@@ -104,7 +104,7 @@ eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\n\nfunction Food(board) {\n  this.board = board;\n  this.location = this.setLocation();\n}\n\nFood.prototype.setLocation = function setLocation() {\n  let location = this.getXY();\n\n  while(this.board.checkForOverlap(location[0], location[1])) {\n    location = this.getXY();\n  }\n\n  this.location = location;\n};\n\nFood.prototype.getXY = function getXY() {\n  let x = Math.floor(Math.random() * Settings.BOARD_DIM_X);\n  let y = Math.floor(Math.random() * Settings.BOARD_DIM_Y);\n  return [x, y];\n};\n\nmodule.exports = Food;\n\n//# sourceURL=webpack:///./src/food.js?");
+eval("const Settings = __webpack_require__(/*! ./settings */ \"./src/settings.js\");\n\nfunction Food(board) {\n  this.board = board;\n  this.location = this.setLocation();\n}\n\nFood.prototype.setLocation = function setLocation() {\n  let location = this.getXY();\n\n  while(this.board.checkForOverlap(location[0], location[1])) {\n    location = this.getXY();\n  }\n\n  this.location = location;\n};\n\nFood.prototype.draw = function draw(ctx) {\n\n};\n\nFood.prototype.getXY = function getXY() {\n  let x = Math.floor(Math.random() * Settings.BOARD_DIM_X);\n  let y = Math.floor(Math.random() * Settings.BOARD_DIM_Y);\n  return [x, y];\n};\n\nmodule.exports = Food;\n\n//# sourceURL=webpack:///./src/food.js?");
 
 /***/ }),
 

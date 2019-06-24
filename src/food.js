@@ -15,6 +15,10 @@ Food.prototype.setLocation = function setLocation() {
   this.location = location;
 };
 
+Food.prototype.draw = function draw(ctx) {
+
+};
+
 Food.prototype.getXY = function getXY() {
   let x = Math.floor(Math.random() * Settings.BOARD_DIM_X);
   let y = Math.floor(Math.random() * Settings.BOARD_DIM_Y);
