@@ -5,10 +5,11 @@ To Do List:
 *Collision
   <!-- -Collision with food...??? -->
 
-*Snake_Food
+*Food
   <!-- -Only one ever in play -->
   <!-- -Random location generation -->
   - Draw
+  - Change cheese to svg -https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas-
 
 *Misc
   Show snake length at the top

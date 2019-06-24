@@ -1,6 +1,7 @@
 const Settings = require("./settings");
 
 function Snake() {
+  this.getBigger = false;
 }
 
 Snake.prototype.setAttributes = function setAttributes() {
@@ -10,7 +11,8 @@ Snake.prototype.setAttributes = function setAttributes() {
   this.head = null;
   let mid = this.middle();
   this.head = mid;
-  this.body = [this.head];
+  this.body = [];
+  this.body.push(mid);
 };
 
 Snake.prototype.changeDirection = function changeDirection(direction) {
@@ -23,26 +25,43 @@ Snake.prototype.changeDirection = function changeDirection(direction) {
 Snake.prototype.move = function move(food) {
   this.head[0] += this.direction[0] * this.speed;
   this.head[1] += this.direction[1] * this.speed;
-  this.body.unshift(this.head);
 
-  //returns true or false
+  this.body.push(this.head);
+
+  if (this.getBigger) {
+    this.body.unshift(this.lastLocation);
+  }
+
+  this.lastLocation = this.head;
+  this.getBigger = false;
   return this.isEating(food);
 };
 
 Snake.prototype.isEating = function isEating(food) {
+  let xHitBox = this.isHitBoxOverlap(0, food);
+  let yHitBox = this.isHitBoxOverlap(1, food);
+
   //If the snake eats, the tail doesn't shrink
   //also exports the tail location for updating the board
-  if (this.head[0] === food[0] && this.head[1] === food[1]) {
+  if (xHitBox && yHitBox) {
     this.length++;
     this.updateSpeed();
+    this.getBigger = true;
+    this.body.unshift(this.lastLocation);
     return true;
   } else {
-    return this.moveTail();
+    this.body.shift();
+    return this.body[0];
   }
 };
 
-Snake.prototype.moveTail = function moveTail() {
-  return this.body.pop();
+Snake.prototype.isHitBoxOverlap = function isHitBoxOverlap(axis, food) {
+  return (
+    ( this.head[axis] >= food[axis] &&
+      this.head[axis] < food[axis] + Settings.FOOD_SIZE) ||
+    ( this.head[axis] + Settings.SNAKE_SIZE >= food[axis] &&
+      this.head[axis] + Settings.SNAKE_SIZE < food[axis] + Settings.FOOD_SIZE)
+  );
 };
 
 Snake.prototype.updateSpeed = function updateSpeed() {
@@ -66,7 +85,9 @@ Snake.prototype.updateSpeed = function updateSpeed() {
 
 Snake.prototype.draw = function draw(ctx) {
   ctx.fillStyle = Settings.SNAKE_COLOR;
+
   for (let part of this.body) {
+    // if(this.length > 2) debugger;
     ctx.fillRect(part[1], part[0], Settings.SNAKE_SIZE, Settings.SNAKE_SIZE);
   }
 };

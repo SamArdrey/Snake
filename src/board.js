@@ -11,7 +11,6 @@ const Settings = require('./settings');
 
 
 function Board() {
-  this.board = this.generateBoard();
 }
 
 Board.prototype.generateBoard = function generateBoard() {
@@ -20,7 +19,7 @@ Board.prototype.generateBoard = function generateBoard() {
     yCoords[row] = new Array(Settings.BOARD_DIM_X).fill(null);
   }
 
-  return yCoords;
+  this.board = yCoords;
 };
 
 Board.prototype.updateSnake = function updateSnake(snakeHead, isEating = true) {

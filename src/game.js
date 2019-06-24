@@ -1,7 +1,7 @@
 const Board = require('./board');
 const Settings = require('./settings');
 const Snake = require("./snake");
-const SnakeFood = require('./food');
+const Food = require('./food');
 
 function Game() {
   this.snake = new Snake();
@@ -12,20 +12,15 @@ function Game() {
 Game.prototype.newGame = function newGame() {
   this.board.generateBoard();
   this.snake.setAttributes();
-  this.food = new SnakeFood(this.board);
+  this.food = new Food(this.board);
 };
 
 Game.prototype.step = function step() {
-  // Fix the coords below to match
-  //snake food once its created
-  let isEating = this.snake.move([0,0]);
+  let isEating = this.snake.move(this.food.location);
+  if (isEating === true) this.food = new Food(this.board);
   this.board.updateSnake(this.snake.head, isEating);
-
   let hasCollided = this.board.checkForCollisions(this.snake.head[0], this.snake.head[1]);
   if (hasCollided) this.newGame();
-  // Save for later
-  // this.moveObjects()
-
 };
 
 Game.prototype.draw = function draw(ctx) {
@@ -56,7 +51,7 @@ Game.prototype.drawLine = function drawLine(ctx, moveX, moveY, lineX, lineY) {
 };
 
 Game.prototype.allObjects = function allObjects() {
-  return [].concat([this.snake]);
+  return [].concat([this.snake], [this.food]);
 };
 
 module.exports = Game;
