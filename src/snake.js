@@ -1,11 +1,17 @@
 const Settings = require("./settings");
 
 function Snake() {
-  this.direction = [-1, 0];
-  this.length = 1;
-  this.head = this.middle();
-  this.body = [this.head];
 }
+
+Snake.prototype.setAttributes = function setAttributes() {
+  this.direction = [1, 0];
+  this.length = 1;
+  this.speed = 2;
+  this.head = null;
+  let mid = this.middle();
+  this.head = mid;
+  this.body = [this.head];
+};
 
 Snake.prototype.changeDirection = function changeDirection(direction) {
   //Prevents the snake from turning around
@@ -15,8 +21,8 @@ Snake.prototype.changeDirection = function changeDirection(direction) {
 };
 
 Snake.prototype.move = function move(food) {
-  this.head[0] += this.direction[0];
-  this.head[1] += this.direction[1];
+  this.head[0] += this.direction[0] * this.speed;
+  this.head[1] += this.direction[1] * this.speed;
   this.body.unshift(this.head);
 
   //returns true or false
@@ -28,15 +34,34 @@ Snake.prototype.isEating = function isEating(food) {
   //also exports the tail location for updating the board
   if (this.head[0] === food[0] && this.head[1] === food[1]) {
     this.length++;
+    this.updateSpeed();
     return true;
   } else {
-    this.moveTail();
-    return false;
+    return this.moveTail();
   }
 };
 
 Snake.prototype.moveTail = function moveTail() {
-  this.body.pop();
+  return this.body.pop();
+};
+
+Snake.prototype.updateSpeed = function updateSpeed() {
+  switch (this.length) {
+    case 5:
+      this.speed = 3;
+      break;
+    case 10:
+      this.speed = 4;
+      break;
+    case 15:
+      this.speed = 5;
+      break;
+    case 20:
+      this.speed = 6;
+      break;
+    default:
+      break;
+  }
 };
 
 Snake.prototype.draw = function draw(ctx) {
@@ -49,6 +74,7 @@ Snake.prototype.draw = function draw(ctx) {
 Snake.prototype.middle = function middle() {
   const y = Settings.DIM_Y / 2;
   const x = Settings.DIM_X / 2;
+
   return [y, x];
 };
 

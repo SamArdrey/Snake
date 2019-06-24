@@ -1,17 +1,33 @@
 const Settings = require('./settings');
 
+// NOTE
+//
+//
+// The board array goes by 'board[y][x]'
+// Whereas everything else records location by l[x][y]
+//
+//
+// NOTE
+
+
 function Board() {
   this.board = this.generateBoard();
 }
 
 Board.prototype.generateBoard = function generateBoard() {
-  let xCoords = new Array(Settings.DIM_X / Settings.SNAKE_SIZE).fill(null);
-  return new Array(Settings.DIM_Y / Settings.SNAKE_SIZE).fill(xCoords);
+  let yCoords = new Array(Settings.BOARD_DIM_Y).fill(null);
+  for (let row in yCoords) {
+    yCoords[row] = new Array(Settings.BOARD_DIM_X).fill(null);
+  }
+
+  return yCoords;
 };
 
-Board.prototype.updateSnake = function updateSnake(add, remove = false) {
-  this.board[add[0]][add[1]] = "snake";
-  if (!!remove) this.board[remove[0]][remove[1]] = null;
+Board.prototype.updateSnake = function updateSnake(snakeHead, isEating = true) {
+  if (snakeHead[1] > 0 ||
+      snakeHead[1] < 0) return;
+  if (!isEating) this.board[isEating[1]][isEating[0]] = null;
+  this.board[snakeHead[1]][snakeHead[0]] = "snake";
 };
 
 // Board.prototype.updateFood = function updateFood (oldFood, newFood) {
@@ -23,42 +39,42 @@ Board.prototype.updateSnake = function updateSnake(add, remove = false) {
 
 // };
 
-Board.prototype.clearLocation = function clearLocation(location) {
-  this.board[location[0]][location[1]] = null;
+Board.prototype.clearLocation = function clearLocation(x, y) {
+  this.board[y][x] = null;
 };
 
-Board.prototype.checkForOverlap = function checkForOverlap(location) {
-  return (this.board[location[0]][location[1]] !== null);
+Board.prototype.checkForOverlap = function checkForOverlap(x, y) {
+  return (this.board[y][x] !== null);
 };
 
-Board.prototype.checkForCollisions = function checkForCollisions(location) {
-  if (this.wallCollision(location)) return true;
-  if (this.snakeCollision(location)) return true;
+Board.prototype.checkForCollisions = function checkForCollisions(x, y) {
+  if (this.wallCollision(x, y)) return true;
+  if (this.snakeCollision(x, y)) return true;
   return false;
 };
 
-Board.prototype.wallCollision = function wallCollision(location) {
-  if (location[0] < 0) return true;
-  if (location[1] < 0) return true;
-  if (location[0] > Settings.DIM_Y) return true;
-  if (location[1] > Settings.DIM_X) return true;
+Board.prototype.wallCollision = function wallCollision(x, y) {
+  if (y < 0) return true;
+  if (x < 0) return true;
+  if (y > Settings.BOARD_DIM_Y) return true;
+  if (x > Settings.BOARD_DIM_X) return true;
   return false;
 };
 
-Board.prototype.snakeCollision = function snakeCollision(location) {
-  if (this.board[location[0]][location[1]]) return true;
+Board.prototype.snakeCollision = function snakeCollision(x, y) {
+  if (this.board[y][x]) return true;
   return false;
 };
 
-//Utils
-//this converts a board location into canvas coordinates
-Board.prototype.boardToCoords =  function boardToCoords(location) {
-  return [location[0] * SNAKE_SIZE, location[1] * SNAKE_SIZE];
-};
+// //Utils
+// //this converts a board location into canvas coordinates
+// Board.prototype.boardToCoords =  function boardToCoords(location) {
+//   return [y * SNAKE_SIZE, x * SNAKE_SIZE];
+// };
 
-//converts canvas coordinates to board location
-Board.prototype.coordsToBoard =  function coordsToBoard(coords) {
-  return [coords[0] / SNAKE_SIZE, coords[1] / SNAKE_SIZE];
-};
+// //converts canvas coordinates to board location
+// Board.prototype.coordsToBoard =  function coordsToBoard(coords) {
+//   return [coords[0] / SNAKE_SIZE, coords[1] / SNAKE_SIZE];
+// };
 
 module.exports = Board;

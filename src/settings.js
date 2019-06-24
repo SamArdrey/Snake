@@ -1,17 +1,27 @@
-
-//board related settings
-export const BG_COLOR = "#000000";
+// Color
+export const BACKGROUND_COLOR = "#000000";
 export const BORDER_COLOR = "pink";
+export const SNAKE_COLOR = 'pink';
+export const SNAKE_FOOD_COLOR = 'white';
+//
+
+
+// Game
 export const DIM_X = 600;
 export const DIM_Y = 600;
 export const FPS = 32;
+//
 
-//snake-related settings
-//snake food is same size as snake
+// Snake
 export const SNAKE_SIZE = 15;
-export const SNAKE_COLOR = 'pink';
+//
 
-//snake food-related settings
-export const SNAKE_FOOD_COLOR = 'white';
+// Food
+
+// Board
+export const BOARD_DIM_X = DIM_X - SNAKE_SIZE;
+export const BOARD_DIM_Y = DIM_Y - SNAKE_SIZE;
+//
+
 
 

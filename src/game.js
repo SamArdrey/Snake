@@ -1,33 +1,36 @@
 const Board = require('./board');
 const Settings = require('./settings');
 const Snake = require("./snake");
-const SnakeFood = require('./snake_food');
+const SnakeFood = require('./food');
 
 function Game() {
   this.snake = new Snake();
   this.board = new Board();
-  // this.food = new SnakeFood();
+  this.newGame();
 }
 
-Game.prototype.generateBoard = function generateBoard() {
-  let xCoords = new Array(Settings.DIM_X).fill(null);
-  return new Array(Settings.DIM_Y).fill(xCoords);
+Game.prototype.newGame = function newGame() {
+  this.board.generateBoard();
+  this.snake.setAttributes();
+  this.food = new SnakeFood(this.board);
 };
 
 Game.prototype.step = function step() {
-  // Save for later
-  // this.board.checkCollisions()
+  // Fix the coords below to match
+  //snake food once its created
+  let isEating = this.snake.move([0,0]);
+  this.board.updateSnake(this.snake.head, isEating);
+
+  let hasCollided = this.board.checkForCollisions(this.snake.head[0], this.snake.head[1]);
+  if (hasCollided) this.newGame();
   // Save for later
   // this.moveObjects()
 
-  // Fix the coords below to match
-  //snake food once its created
-  this.snake.move([0,0]);
 };
 
 Game.prototype.draw = function draw(ctx) {
   ctx.clearRect(0, 0, Settings.DIM_X, Settings.DIM_Y);
-  ctx.fillStyle = Settings.BG_COLOR;
+  ctx.fillStyle = Settings.BACKGROUND_COLOR;
   ctx.fillRect(0, 0, Settings.DIM_X, Settings.DIM_Y);
   this.drawOutline(ctx);
 
