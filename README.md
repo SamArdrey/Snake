@@ -1,17 +1,15 @@
 To Do List:
 *Collision
-    *Collision with walls
-    *Collision with self
+    <!-- *Collision with walls -->
+    <!-- *Collision with self -->
     *Collision with food
 
 *Snake_Food
     Only one ever in play
     Random location generation
 
-
 *Misc
     Show snake length at the top
-
 
 *Note
     When snake gobbles up food, length increases by 1,

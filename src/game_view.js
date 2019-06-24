@@ -7,14 +7,14 @@ function GameView(game, ctx) {
 }
 
 GameView.DIRECTION = {
-  w: [1,0],
-  up: [1,0],
+  w: [-1,0],
+  up: [-1,0],
 
   a: [0,-1],
   left: [0,-1],
 
-  s: [-1,0],
-  down: [-1,0],
+  s: [1,0],
+  down: [1,0],
 
   d: [0,1],
   right: [0,1],

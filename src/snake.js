@@ -14,21 +14,25 @@ Snake.prototype.changeDirection = function changeDirection(direction) {
   this.direction = direction;
 };
 
-
 Snake.prototype.move = function move(food) {
   this.head[0] += this.direction[0];
   this.head[1] += this.direction[1];
   this.body.unshift(this.head);
 
+  //returns true or false
   return this.isEating(food);
 };
 
 Snake.prototype.isEating = function isEating(food) {
   //If the snake eats, the tail doesn't shrink
   //also exports the tail location for updating the board
-  if (this.head[0] === food[0] &&
-    this.head[1] === food[1]) return this.body[this.body.length-1];
-  this.moveTail();
+  if (this.head[0] === food[0] && this.head[1] === food[1]) {
+    this.length++;
+    return true;
+  } else {
+    this.moveTail();
+    return false;
+  }
 };
 
 Snake.prototype.moveTail = function moveTail() {

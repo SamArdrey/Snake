@@ -9,10 +9,15 @@ Board.prototype.generateBoard = function generateBoard() {
   return new Array(Settings.DIM_Y / Settings.SNAKE_SIZE).fill(xCoords);
 };
 
-Board.prototype.update = function update(add, remove = false) {
+Board.prototype.updateSnake = function updateSnake(add, remove = false) {
   this.board[add[0]][add[1]] = "snake";
   if (!!remove) this.board[remove[0]][remove[1]] = null;
 };
+
+// Board.prototype.updateFood = function updateFood (oldFood, newFood) {
+//   this.board[oldFood[0]][oldFood[1]] = null;
+//   this.board[newFood[0]][newFood[1]] = 'food';
+// };
 
 // Board.prototype.addFood = function addFood(location, objectType) {
 
@@ -43,7 +48,7 @@ Board.prototype.wallCollision = function wallCollision(location) {
 Board.prototype.snakeCollision = function snakeCollision(location) {
   if (this.board[location[0]][location[1]]) return true;
   return false;
-}
+};
 
 //Utils
 //this converts a board location into canvas coordinates
