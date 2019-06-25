@@ -42,6 +42,13 @@ Snake.prototype.isEating = function isEating(food) {
   }
 };
 
+
+//
+//
+// Move to settings so that food can use it
+//
+//
+//
 Snake.prototype.isHitBoxOverlap = function isHitBoxOverlap(axis, food) {
   return (
     ( this.head[axis] >= food[axis] &&
@@ -53,16 +60,16 @@ Snake.prototype.isHitBoxOverlap = function isHitBoxOverlap(axis, food) {
 
 Snake.prototype.updateSpeed = function updateSpeed() {
   switch (this.body.length) {
-    case 5:
+    case 10:
       this.speed = 6;
       break;
-    case 10:
+    case 20:
       this.speed = 7;
       break;
-    case 15:
+    case 25:
       this.speed = 8;
       break;
-    case 20:
+    case 30:
       this.speed = 9;
       break;
     default:
