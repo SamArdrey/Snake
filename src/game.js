@@ -10,15 +10,15 @@ function Game() {
 }
 
 Game.prototype.newGame = function newGame() {
-  this.board.generateBoard();
   this.snake.setAttributes();
+  this.board.generateBoard(this.snake.head);
   this.food = new Food(this.board);
 };
 
 Game.prototype.step = function step() {
   let isEating = this.snake.move(this.food.location);
   if (isEating === true) this.food = new Food(this.board);
-  this.board.updateSnake(this.snake.head, isEating);
+  this.board.updateSnake(this.snake, isEating);
   let hasCollided = this.board.checkForCollisions(this.snake.head[0], this.snake.head[1]);
   if (hasCollided) this.newGame();
 };
