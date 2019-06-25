@@ -1,23 +1,37 @@
-To Do List:
-*Overarching
-  Figure out what to do to make x and y coordinates either consistant or easily understood
+* Overarching
+  - Fix CSS
+  - Show snake length at the top
 
-*Collision
+* Noise
+  - Sound Effects
+  - Music
+
+* Collision
   <!-- -Collision with food...??? -->
+  - Create Collision utility
+  - Move collision functions from snake class to util
+  - Figure out how to make the functions more generic to save space and allow for easier conversion between classic and battle royale mode
 
-*Food
+* Board
+  - Migrate necessary functions over to collision and other objects
+
+* Food
   <!-- -Only one ever in play -->
   <!-- -Random location generation -->
-  - Draw
-  - Change cheese to svg -https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas-
+  <!-- - Draw -->
+  - Change cheese to svg https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 
-*Misc
-  Show snake length at the top
+* Snake
+  - Move middle function to setting or generic util file--this one only if I have a few other functions that I could move over
 
-*NOTES
-  When snake gobbles up food, length increases by 1,
-  tail does not decrease in size
+* Battle royale mode with computer?
+  - Create a button or modal for switching between the two games
+  - Create a snake subclass for computer
+  - Make snake class interchangeable
+  - Make game class interchangeable
+  - Make food class interchangeable
+  - Make collision utility interchangeable
 
-Idea List:
-  *Make walls loop back around so snake leaves right side, comes back left side
-  *Random Colors for snake and snake food
+* Misc ideas
+  - Make walls loop back around so snake leaves right side, comes back left side
+  - Random Colors for snake and snake food
