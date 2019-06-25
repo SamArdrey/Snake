@@ -1,6 +1,8 @@
 * Overarching
   - Fix CSS
   - Show snake length at the top
+  - Clean up dead code and console.logs
+  - Make comments explicit
 
 * Noise
   - Sound Effects
