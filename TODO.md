@@ -3,6 +3,7 @@
   - Show snake length at the top
   - Clean up dead code and console.logs
   - Make comments explicit
+  - README BRUH
 
 * Noise
   - Sound Effects
