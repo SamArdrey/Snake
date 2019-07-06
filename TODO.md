@@ -25,7 +25,7 @@
   - Change cheese to svg https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 
 * Snake
-  - Move middle function to setting or generic util file--this one only if I have a few other functions that I could move over
+  <!-- - Move middle function to setting or generic util file--this one only if I have a few other functions that I could move over -->
 
 * Battle royale mode with computer?
   - Create a button or modal for switching between the two games

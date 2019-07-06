@@ -12,12 +12,12 @@ function Game() {
 Game.prototype.newGame = function newGame() {
   this.snake.setAttributes();
   this.board.generateBoard(this.snake.head);
-  this.food = new Food(this.board);
+  this.food = new Food(this.snake);
 };
 
 Game.prototype.step = function step() {
   let isEating = this.snake.move(this.food.location);
-  if (isEating === true) this.food = new Food(this.board);
+  if (isEating === true) this.food = new Food(this.snake);
   this.board.updateSnake(this.snake, isEating);
   let hasCollided = this.board.checkForCollisions(this.snake.head[0], this.snake.head[1]);
   if (hasCollided) this.newGame();

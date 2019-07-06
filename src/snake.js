@@ -1,4 +1,5 @@
 const Settings = require("./settings");
+const Util = require("./util");
 
 function Snake() {
 }
@@ -6,7 +7,7 @@ function Snake() {
 Snake.prototype.setAttributes = function setAttributes() {
   this.direction = [1, 0];
   this.speed = 5;
-  let mid = this.middle();
+  let mid = Util.middle();
   this.head = mid;
   this.body = [[mid[0], mid[1]]];
   this.tail = [mid[0], mid[1]];
@@ -28,12 +29,9 @@ Snake.prototype.move = function move(food) {
 };
 
 Snake.prototype.isEating = function isEating(food) {
-  let xHitBox = this.isHitBoxOverlap(0, food);
-  let yHitBox = this.isHitBoxOverlap(1, food);
-
   //If the snake eats, the tail doesn't shrink
   //also exports the tail location for updating the board
-  if (xHitBox && yHitBox) {
+  if (this.checkForOverlap(food)) {
     this.updateSpeed();
     return true;
   } else {
@@ -49,7 +47,14 @@ Snake.prototype.isEating = function isEating(food) {
 //
 //
 //
-Snake.prototype.isHitBoxOverlap = function isHitBoxOverlap(axis, food) {
+Snake.prototype.checkForOverlap = function checkForOverlap(food) {
+  let xHitbox = this.isHitboxOverlap(0, food);
+  let yHitbox = this.isHitboxOverlap(1, food);
+
+  return (xHitbox && yHitbox);
+};
+
+Snake.prototype.isHitboxOverlap = function isHitboxOverlap(axis, food) {
   return (
     ( this.head[axis] >= food[axis] &&
       this.head[axis] < food[axis] + Settings.FOOD_SIZE) ||
@@ -83,13 +88,6 @@ Snake.prototype.draw = function draw(ctx) {
   for (let part of this.body) {
     ctx.fillRect(part[1], part[0], Settings.SNAKE_SIZE, Settings.SNAKE_SIZE);
   }
-};
-
-Snake.prototype.middle = function middle() {
-  const y = Settings.DIM_Y / 2;
-  const x = Settings.DIM_X / 2;
-
-  return [y, x];
 };
 
 module.exports = Snake;

@@ -1,13 +1,13 @@
 const Settings = require("./settings");
 
-function Food(board) {
-  this.board = board;
+function Food(snake) {
+  this.snake = snake;
   this.setLocation();
 }
 
 Food.prototype.setLocation = function setLocation() {
   let location = this.getXY();
-  while(this.board.checkForOverlap(location[0], location[1])) {
+  while(this.snake.checkForOverlap(location)) {
     location = this.getXY();
   }
 
