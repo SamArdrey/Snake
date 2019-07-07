@@ -33,7 +33,6 @@ Snake.prototype.isEating = function isEating(food) {
   //If the snake eats, the tail doesn't shrink
   //also exports the tail location for updating the board
   if (this.checkForOverlap(food)) {
-    this.updateSpeed();
     this.length++;
     return true;
   } else {
@@ -67,25 +66,6 @@ Snake.prototype.isHitboxOverlap = function isHitboxOverlap(axis, food, part) {
     ( part[axis] + Settings.SNAKE_SIZE >= food[axis] &&
       part[axis] + Settings.SNAKE_SIZE < food[axis] + Settings.FOOD_SIZE)
   );
-};
-
-Snake.prototype.updateSpeed = function updateSpeed() {
-  switch (this.body.length) {
-    case 10:
-      this.speed = 6;
-      break;
-    case 20:
-      this.speed = 7;
-      break;
-    case 25:
-      this.speed = 8;
-      break;
-    case 30:
-      this.speed = 9;
-      break;
-    default:
-      break;
-  }
 };
 
 Snake.prototype.draw = function draw(ctx) {
