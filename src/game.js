@@ -1,5 +1,7 @@
 const Board = require('./board');
 const Settings = require('./settings');
+const Util = require("./util");
+
 const Snake = require("./snake");
 const Food = require('./food');
 
@@ -19,8 +21,12 @@ Game.prototype.step = function step() {
   let isEating = this.snake.move(this.food.location);
   if (isEating === true) this.food = new Food(this.snake);
   this.board.updateSnake(this.snake, isEating);
-  let hasCollided = this.board.checkForCollisions(this.snake.head[0], this.snake.head[1]);
-  if (hasCollided) this.newGame();
+  if (Util.wallCollision(this.snake.head[0], this.snake.head[1])) return this.newGame();
+
+  if (this.snake.length > 0 &&
+      Util.snakeCollision(this.snake.head, this.snake.body)) {
+    this.newGame();
+  }
 };
 
 Game.prototype.draw = function draw(ctx) {

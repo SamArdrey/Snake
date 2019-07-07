@@ -44,7 +44,7 @@ GameView.prototype.animate = function animate(time) {
   this.lastTime = time;
 
   // every call to animate requests causes another call to animate
-  requestAnimationFrame(this.animate.bind(this));
+  setTimeout(() => requestAnimationFrame(this.animate.bind(this)), 150);
 };
 
 module.exports = GameView;

@@ -37,26 +37,26 @@ Board.prototype.snakeCollision = function snakeCollision(x, y) {
 //   this.board[y][x] = null;
 // };
 
-Board.prototype.checkForOverlap = function checkForOverlap(x, y) {
-  return (this.board[y][x] !== null);
-};
+// Board.prototype.checkForOverlap = function checkForOverlap(x, y) {
+//   return (this.board[y][x] !== null);
+// };
 
-Board.prototype.checkForCollisions = function checkForCollisions(x, y) {
-  if (this.wallCollision(x, y) ||
-      this.snakeCollision(x, y)) {
-    return true;
-  } else {
-    return false;
-  }
-};
+// Board.prototype.checkForCollisions = function checkForCollisions(x, y) {
+//   if (this.wallCollision(x, y) ||
+//       this.snakeCollision(x, y)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
 
-Board.prototype.wallCollision = function wallCollision(x, y) {
-  if (y < 0) return true;
-  if (x < 0) return true;
-  if (y > Settings.BOARD_DIM_Y) return true;
-  if (x > Settings.BOARD_DIM_X) return true;
-  return false;
-};
+// Board.prototype.wallCollision = function wallCollision(x, y) {
+//   if (y < 0) return true;
+//   if (x < 0) return true;
+//   if (y > Settings.BOARD_DIM_Y) return true;
+//   if (x > Settings.BOARD_DIM_X) return true;
+//   return false;
+// };
 
 
 module.exports = Board;
