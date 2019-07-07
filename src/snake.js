@@ -18,6 +18,9 @@ Snake.prototype.changeDirection = function changeDirection(direction) {
   //Prevents the snake from turning around
   if (this.direction[0] === -1 * direction[0] &&
       this.direction[1] === -1 * direction[1]) return;
+  if (this.length > 0 &&
+      this.head[0] + (direction[0] * 25) === this.body[1][0] &&
+      this.head[1] + (direction[1] * 25) === this.body[1][1]) return;
   this.direction = direction;
 };
 
@@ -30,42 +33,16 @@ Snake.prototype.move = function move(food) {
 };
 
 Snake.prototype.isEating = function isEating(food) {
+  let type = 'eating';
   //If the snake eats, the tail doesn't shrink
   //also exports the tail location for updating the board
-  if (this.checkForOverlap(food)) {
+  if (Util.snakeCollision(food, this.body, type)) {
     this.length++;
     return true;
   } else {
     this.tail = this.body[this.body.length-2];
     return this.body.pop();
   }
-};
-
-
-//
-//
-// Move to settings so that food can use it
-//
-//
-//
-Snake.prototype.checkForOverlap = function checkForOverlap(food) {
-  for (let part of this.body) {
-    let xHitbox = this.isHitboxOverlap(0, food, part);
-    let yHitbox = this.isHitboxOverlap(1, food, part);
-
-    if (xHitbox && yHitbox) return true;
-  }
-
-  return false;
-};
-
-Snake.prototype.isHitboxOverlap = function isHitboxOverlap(axis, food, part) {
-  return (
-    ( part[axis] >= food[axis] &&
-      part[axis] < food[axis] + Settings.FOOD_SIZE) ||
-    ( part[axis] + Settings.SNAKE_SIZE >= food[axis] &&
-      part[axis] + Settings.SNAKE_SIZE < food[axis] + Settings.FOOD_SIZE)
-  );
 };
 
 Snake.prototype.draw = function draw(ctx) {

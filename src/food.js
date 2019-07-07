@@ -1,23 +1,15 @@
 const Settings = require("./settings");
 
-function Food(snake) {
-  this.snake = snake;
+function Food() {
   this.setLocation();
 }
 
 Food.prototype.setLocation = function setLocation() {
-  let location = this.getXY();
-  while(this.snake.checkForOverlap(location)) {
-    location = this.getXY();
-  }
-
-  this.location = location;
-};
-
-Food.prototype.getXY = function getXY() {
   let x = Math.floor(Math.random() * Settings.BOARD_DIM_X);
   let y = Math.floor(Math.random() * Settings.BOARD_DIM_Y);
-  return [x, y];
+  this.location = [x, y];
+
+  return this.location;
 };
 
 Food.prototype.draw = function draw(ctx) {

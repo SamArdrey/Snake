@@ -15,12 +15,13 @@ export const wallCollision = function wallCollision(x, y) {
   return false;
 };
 
-export const snakeCollision = function snakeCollision(headOrFood, body) {
-  for (let part = 1; part < body.length; part++) {
+export const snakeCollision = function snakeCollision(headOrFood, body, type) {
+  for (let part = 0; part < body.length; part++) {
     let xHitbox = isHitboxOverlap(0, headOrFood, body[part]);
     let yHitbox = isHitboxOverlap(1, headOrFood, body[part]);
 
     if (xHitbox && yHitbox) return true;
+    if (type === 'eating') return;
   }
 
   return false;

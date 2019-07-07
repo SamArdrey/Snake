@@ -1,4 +1,3 @@
-const Board = require('./board');
 const Settings = require('./settings');
 const Util = require("./util");
 
@@ -7,24 +6,29 @@ const Food = require('./food');
 
 function Game() {
   this.snake = new Snake();
-  this.board = new Board();
   this.newGame();
 }
 
 Game.prototype.newGame = function newGame() {
   this.snake.setAttributes();
-  this.board.generateBoard(this.snake.head);
-  this.food = new Food(this.snake);
+  this.food = new Food();
+};
+
+Game.prototype.makeFood = function makeFood() {
+  this.food = new Food();
+  while(Util.snakeCollision(this.food.location, this.snake.body)) {
+    this.food = new Food();
+  }
 };
 
 Game.prototype.step = function step() {
   let isEating = this.snake.move(this.food.location);
-  if (isEating === true) this.food = new Food(this.snake);
-  this.board.updateSnake(this.snake, isEating);
+  if (isEating === true) this.makeFood();
   if (Util.wallCollision(this.snake.head[0], this.snake.head[1])) return this.newGame();
 
+  let tempBody = this.snake.body.slice(1);
   if (this.snake.length > 0 &&
-      Util.snakeCollision(this.snake.head, this.snake.body)) {
+      Util.snakeCollision(this.snake.head, tempBody)) {
     this.newGame();
   }
 };
