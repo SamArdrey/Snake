@@ -11,12 +11,12 @@
 
 * Collision
   <!-- -Collision with food...??? -->
-  - Create Collision utility
-  - Move collision functions from snake class to util
-  - Figure out how to make the functions more generic to save space and allow for easier conversion between classic and battle royale mode
+  <!-- - Create Collision utility -->
+  <!-- - Move collision functions from snake class to util -->
+  <!-- - Figure out how to make the functions more generic to save space and allow for easier conversion between classic and battle royale mode -->
 
-* Board
-  - Migrate necessary functions over to collision and other objects
+<!-- * Board -->
+  <!-- - Migrate necessary functions over to collision and other objects -->
 
 * Food
   <!-- -Only one ever in play -->
@@ -28,6 +28,7 @@
   <!-- - Move middle function to setting or generic util file--this one only if I have a few other functions that I could move over -->
 
 * Battle royale mode with computer?
+  --If I decide to come back down the line--
   - Create a button or modal for switching between the two games
   - Create a snake subclass for computer
   - Make snake class interchangeable
